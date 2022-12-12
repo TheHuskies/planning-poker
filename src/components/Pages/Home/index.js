@@ -1,9 +1,12 @@
 import { Button, Col, Row } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import playCards from "../../../assets/images/play_card.jpg";
+import { ModalRegister } from "../../ModalRegister";
 import { Container } from "./Home.styled";
 
 export const Home = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <Container>
       <Row>
@@ -25,6 +28,7 @@ export const Home = () => {
                   shape="round"
                   size="large"
                   className="btn-create-room"
+                  onClick={() => setIsModalOpen(true)}
                 >
                   Criar sala
                 </Button>
@@ -40,6 +44,10 @@ export const Home = () => {
                 </Button>
               </div>
             </div>
+            <ModalRegister
+              open={isModalOpen}
+              close={() => setIsModalOpen(false)}
+            />
           </div>
         </Col>
         <Col xs={24} lg={12}>

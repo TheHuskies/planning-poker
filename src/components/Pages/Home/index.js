@@ -32,6 +32,10 @@ export const Home = () => {
                 >
                   Criar sala
                 </Button>
+                <ModalRegister
+                  open={isModalOpen}
+                  close={() => setIsModalOpen(false)}
+                />
               </div>
               <div>
                 <Button
@@ -44,10 +48,6 @@ export const Home = () => {
                 </Button>
               </div>
             </div>
-            <ModalRegister
-              open={isModalOpen}
-              close={() => setIsModalOpen(false)}
-            />
           </div>
         </Col>
         <Col xs={24} lg={12}>

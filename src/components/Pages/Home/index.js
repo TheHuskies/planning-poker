@@ -1,7 +1,7 @@
 import { Button, Col, Row } from "antd";
 import React, { useState } from "react";
 import playCards from "../../../assets/images/play_card.jpg";
-import { ModalRegister } from "../../ModalRegister";
+import { ModalRegister } from "../../Modal/ModalRegister";
 import { Container } from "./Home.styled";
 
 export const Home = () => {

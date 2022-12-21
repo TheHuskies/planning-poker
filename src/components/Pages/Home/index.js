@@ -2,10 +2,25 @@ import { Button, Col, Row } from "antd";
 import React, { useState } from "react";
 import playCards from "../../../assets/images/play_card.jpg";
 import { ModalRegister } from "../../Modal/ModalRegister";
+import { ModalSucess } from "../../Modal/ModalSuccess";
 import { Container } from "./Home.styled";
 
 export const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+
+  const handleClick = (event) => {
+    console.log("Button clicked");
+
+    const element = document.getElementById("overlayBtn");
+    if (element) {
+      element.addEventListener("click", setIsFeedbackOpen(true));
+    }
+    element.addEventListener("click", setIsModalOpen(false));
+    return () => {
+      element.removeEventListener("click", handleClick);
+    };
+  };
 
   return (
     <Container>
@@ -35,6 +50,11 @@ export const Home = () => {
                 <ModalRegister
                   open={isModalOpen}
                   close={() => setIsModalOpen(false)}
+                  next={handleClick}
+                />
+                <ModalSucess
+                  open={isFeedbackOpen}
+                  close={() => setIsFeedbackOpen(false)}
                 />
               </div>
               <div>

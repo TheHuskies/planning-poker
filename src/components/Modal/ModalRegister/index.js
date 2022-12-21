@@ -4,7 +4,7 @@ import { Container } from "./ModalRegister.styled";
 import { useState } from "react";
 import { Option } from "antd/lib/mentions";
 import avatar from "../../../assets/icons/avatar-generic.png";
-import { ModalSucess } from "../ModalSuccess";
+// import { ModalSucess } from "../ModalSuccess";
 
 const validatePrimeNumber = (number) => {
   if (number >= 2 && number <= 20) {
@@ -29,7 +29,7 @@ const formItemLayout = {
 
 export const ModalRegister = (props) => {
   const [form] = Form.useForm();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [number, setNumber] = useState({
     value: 2,
@@ -48,6 +48,7 @@ export const ModalRegister = (props) => {
         onCancel={props.close}
         footer={[
           <Button
+            id="overlayBtn"
             type="primary"
             shape="round"
             size="large"
@@ -56,7 +57,7 @@ export const ModalRegister = (props) => {
               border: "none",
               margin: 5,
             }}
-            onClick={() => setIsModalOpen(true)}
+            onClick={props.next}
           >
             Próximo
           </Button>,
@@ -114,7 +115,7 @@ export const ModalRegister = (props) => {
           </div>
         </Container>
       </Modal>
-      <ModalSucess open={isModalOpen} close={() => setIsModalOpen(false)} />
+      {/* <ModalSucess open={isModalOpen} close={() => setIsModalOpen(false)} /> */}
     </>
   );
 };

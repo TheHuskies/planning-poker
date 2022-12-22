@@ -10,9 +10,7 @@ export const Home = () => {
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
 
   const handleClick = (event) => {
-    console.log("Button clicked");
-
-    const element = document.getElementById("overlayBtn");
+    const element = document.getElementById("btn-next");
     if (element) {
       element.addEventListener("click", setIsFeedbackOpen(true));
     }
@@ -30,7 +28,7 @@ export const Home = () => {
             <h2>
               Uma nova forma de tomar <strong>decisões</strong> na sua reunião
               de
-              <strong> planejamento de Sprint</strong>{" "}
+              <strong> planejamento de Sprint</strong>
             </h2>
             <p>
               Com o planning poker você estima melhor o esforço das tarefas

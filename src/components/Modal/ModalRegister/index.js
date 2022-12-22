@@ -2,9 +2,7 @@ import React from "react";
 import { Button, Form, Input, InputNumber, Modal, Select } from "antd";
 import { Container } from "./ModalRegister.styled";
 import { useState } from "react";
-import { Option } from "antd/lib/mentions";
 import avatar from "../../../assets/icons/avatar-generic.png";
-// import { ModalSucess } from "../ModalSuccess";
 
 const validatePrimeNumber = (number) => {
   if (number >= 2 && number <= 20) {
@@ -29,8 +27,6 @@ const formItemLayout = {
 
 export const ModalRegister = (props) => {
   const [form] = Form.useForm();
-  // const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [number, setNumber] = useState({
     value: 2,
   });
@@ -41,6 +37,13 @@ export const ModalRegister = (props) => {
     });
   };
 
+  const onChange = (value) => {
+    console.log(`selected ${value}`);
+  };
+  const onSearch = (value) => {
+    console.log("search:", value);
+  };
+
   return (
     <>
       <Modal
@@ -48,7 +51,8 @@ export const ModalRegister = (props) => {
         onCancel={props.close}
         footer={[
           <Button
-            id="overlayBtn"
+            key={"index"}
+            id="btn-next"
             type="primary"
             shape="round"
             size="large"
@@ -101,21 +105,37 @@ export const ModalRegister = (props) => {
                   ]}
                 >
                   <Select
+                    showSearch
                     placeholder="Selecione a opção de que deseja..."
-                    // onChange={onGenderChange}
-                    allowClear
-                  >
-                    <Option value="Fibonacci">Fibonacci</Option>
-                    <Option value="Scrumm">Scrumm</Option>
-                    <Option value="Sequencial">Sequencial</Option>
-                  </Select>
+                    optionFilterProp="children"
+                    onChange={onChange}
+                    onSearch={onSearch}
+                    filterOption={(input, option) =>
+                      (option?.label ?? "")
+                        .toLowerCase()
+                        .includes(input.toLowerCase())
+                    }
+                    options={[
+                      {
+                        value: "Fibonacci",
+                        label: "Fibonacci",
+                      },
+                      {
+                        value: "Scrumm",
+                        label: "Scrumm",
+                      },
+                      {
+                        value: "Sequencial",
+                        label: "Sequencial",
+                      },
+                    ]}
+                  />
                 </Form.Item>
               </Form>
             </div>
           </div>
         </Container>
       </Modal>
-      {/* <ModalSucess open={isModalOpen} close={() => setIsModalOpen(false)} /> */}
     </>
   );
 };

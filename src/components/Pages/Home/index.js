@@ -1,18 +1,21 @@
 import { Button, Col, Row } from "antd";
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import playCards from "../../../assets/images/play_card.jpg";
 import { ModalRegister } from "../../Modal/ModalRegister";
-import { ModalSucess } from "../../Modal/ModalSuccess";
+import { ModalSuccess } from "../../Modal/ModalSuccess";
 import { Container } from "./Home.styled";
 
 export const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+  const history = useHistory();
 
   const handleClick = (event) => {
     const element = document.getElementById("btn-next");
     if (element) {
       element.addEventListener("click", setIsFeedbackOpen(true));
+      setTimeout(() => history.push("/create-story"), 5000);
     }
     element.addEventListener("click", setIsModalOpen(false));
     return () => {
@@ -50,7 +53,7 @@ export const Home = () => {
                   close={() => setIsModalOpen(false)}
                   next={handleClick}
                 />
-                <ModalSucess
+                <ModalSuccess
                   open={isFeedbackOpen}
                   close={() => setIsFeedbackOpen(false)}
                 />

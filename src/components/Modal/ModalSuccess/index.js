@@ -3,7 +3,7 @@ import { Modal } from "antd";
 import rocket from "../../../assets/icons/rocket.png";
 import { Container } from "./ModalSuccess.styled";
 
-export const ModalSucess = (props) => {
+export const ModalSuccess = (props) => {
   return (
     <Modal open={props.open} onCancel={props.close} footer={(null, null)}>
       <Container>

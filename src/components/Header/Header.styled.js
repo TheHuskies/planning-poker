@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
-  margin: 20px 20px 20px 25px;
+  margin: 22px 20px 7px 25px;
   p {
     font-size: 22px;
     font-weight: 700;

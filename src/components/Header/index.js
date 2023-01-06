@@ -10,7 +10,7 @@ export const Header = () => {
           <img src={logo} alt="logo" style={{ width: 40 }} />
         </div>
         <div style={{ marginLeft: 7 }}>
-          <p>PlannerPoker</p>
+          <p>PlanningPoker</p>
         </div>
       </Container>
       <hr

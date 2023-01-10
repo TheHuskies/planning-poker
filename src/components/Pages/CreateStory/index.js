@@ -4,6 +4,7 @@ import { Container, StyledIcon } from "./CreateStory.styled";
 import TextArea from "antd/lib/input/TextArea";
 import Delete from "../../../assets/icons/delete.svg";
 import Play from "../../../assets/icons/play.svg";
+import { Link } from "react-router-dom";
 
 const EditableContext = React.createContext(null);
 
@@ -138,9 +139,11 @@ export const CreateStory = () => {
       render: () => (
         <>
           <Tooltip placement="bottom" title={"Iniciar jogo"}>
-            <StyledIcon>
-              <img src={Play} alt="Play" />
-            </StyledIcon>
+            <Link to="/room">
+              <StyledIcon>
+                <img src={Play} alt="Play" />
+              </StyledIcon>
+            </Link>
           </Tooltip>
         </>
       ),

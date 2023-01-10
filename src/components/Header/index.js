@@ -3,15 +3,6 @@ import logo from "../../assets/icons/poker.svg";
 import { Container } from "./Header.styled";
 
 export const Header = () => {
-  // const param = (e) => {
-  //   console.log("PASSOU AQUI");
-  //   if (window.location.pathname === "/") {
-  //     console.log("PASSOU DE NOVO");
-  //     e.preventDefault();
-  //     return true;
-  //   } else return false;
-  // };
-
   return (
     <>
       <Container>
@@ -25,9 +16,10 @@ export const Header = () => {
       {window.location.pathname !== "/" && (
         <hr
           style={{
-            borderTop: "1.6px solid #2f3640",
-            color: "#2f3640",
-            opacity: 0.1,
+            border: 0,
+            height: 1.5,
+            boxShadow:
+              "0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0)",
           }}
         />
       )}

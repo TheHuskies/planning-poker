@@ -16,3 +16,12 @@ export const Container = styled.div`
     font-weight: 700;
   }
 `;
+
+export const StyledIcon = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  img {
+    width: 20px;
+  }
+`;

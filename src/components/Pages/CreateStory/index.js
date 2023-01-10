@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Button, Form, Input, Modal, Popconfirm, Table } from "antd";
-import { Container } from "./CreateStory.styled";
+import { Button, Form, Input, Modal, Popconfirm, Table, Tooltip } from "antd";
+import { Container, StyledIcon } from "./CreateStory.styled";
 import TextArea from "antd/lib/input/TextArea";
+import Delete from "../../../assets/icons/delete.svg";
+import Play from "../../../assets/icons/play.svg";
 
 const EditableContext = React.createContext(null);
 
@@ -124,9 +126,24 @@ export const CreateStory = () => {
             title="Tem certeza que deseja excluir?"
             onConfirm={() => handleDelete(record.key)}
           >
-            <p style={{ color: "red", fontWeight: 500 }}>Excluir</p>
+            <Tooltip placement="bottom" title={"Excluir"}>
+              <StyledIcon>
+                <img src={Delete} alt="Excluir" />
+              </StyledIcon>
+            </Tooltip>
           </Popconfirm>
         ) : null,
+    },
+    {
+      render: () => (
+        <>
+          <Tooltip placement="bottom" title={"Iniciar jogo"}>
+            <StyledIcon>
+              <img src={Play} alt="Play" />
+            </StyledIcon>
+          </Tooltip>
+        </>
+      ),
     },
   ];
   const handleAdd = () => {

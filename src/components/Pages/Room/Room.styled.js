@@ -50,8 +50,19 @@ export const Container = styled.div`
       margin: 20px 0px 20px 0px;
     }
   }
-  .div-card {
+  .title {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 31px;
     margin-top: 40px;
+  }
+  .div-card {
+    margin: 10px;
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
     p {
       color: #1e1e1e;
       font-family: "Inter";
@@ -62,19 +73,41 @@ export const Container = styled.div`
     }
   }
   .card-first {
-    width: 110px;
-    height: 147px;
+    width: 122px;
+    height: 187px;
     border: 1px solid rgba(0, 0, 0, 0.34);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
+    p {
+      margin: auto;
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 19px;
+      padding: 8px;
+    }
   }
   .card-second {
     width: 69px;
-    height: 98px;
+    height: 115px;
     border: 0.7px solid rgba(0, 0, 0, 0.24);
     border-radius: 5px;
     display: flex;
     justify-content: center;
+    vertical-align: baseline;
     margin: auto;
+    p {
+      vertical-align: baseline;
+      margin: auto;
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 34px;
+    }
+  }
+  .p-card-3 {
+    transform: rotate(0.5turn);
   }
 `;

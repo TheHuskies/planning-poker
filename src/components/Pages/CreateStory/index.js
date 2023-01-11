@@ -199,7 +199,7 @@ export const CreateStory = () => {
         size="large"
         className="btn-new-story"
       >
-        Nova Story
+        Nova História
       </Button>
       <Table
         components={components}

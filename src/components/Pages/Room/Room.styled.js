@@ -36,7 +36,8 @@ export const Container = styled.div`
   .div-link,
   .div-timer {
     padding: 15px;
-    p {
+    .label-input-timer,
+    .label-input-link {
       color: #1e1e1e;
       font-family: "Inter";
       font-style: normal;

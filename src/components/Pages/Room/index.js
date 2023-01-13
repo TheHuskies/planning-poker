@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Col, Input, Row, TimePicker } from "antd";
 import dayjs from "dayjs";
 import { Container } from "./Room.styled";
+import { Users } from "../../Users";
 
 export const Room = () => {
   const format = "HH:mm";
@@ -29,7 +30,7 @@ export const Room = () => {
       <Container>
         <div>
           <div className="div-link">
-            <p>Compartilhe o link da sala: </p>
+            <p className="label-input-link">Compartilhe o link da sala: </p>
             <Input
               placeholder="Link da sala"
               value={"https://tenor.com/bIgLu.gif"}
@@ -41,7 +42,7 @@ export const Room = () => {
             </div>
           </div>
           <div className="div-timer">
-            <p>Definir Timer: </p>
+            <p className="label-input-timer">Definir Timer: </p>
             <TimePicker
               placeholder="Definir Timer"
               defaultValue={dayjs("12:08", format)}
@@ -53,6 +54,8 @@ export const Room = () => {
               </Button>
             </div>
             <hr />
+            <Users />
+            <Users />
           </div>
         </div>
         <div>

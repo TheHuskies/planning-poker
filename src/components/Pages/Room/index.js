@@ -1,8 +1,12 @@
 import React from "react";
-import { Button, Col, Input, Row, TimePicker } from "antd";
+import { Button, Input, TimePicker, Statistic } from "antd";
 import dayjs from "dayjs";
 import { Container } from "./Room.styled";
 import { Users } from "../../Users";
+import Timer from "./../../../assets/icons/timer.svg";
+const { Countdown } = Statistic;
+
+const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30;
 
 export const Room = () => {
   const format = "HH:mm";
@@ -25,6 +29,10 @@ export const Room = () => {
   }
   console.log(fibonacci(fib, 20));
 
+  const onFinish = () => {
+    console.log("finished!");
+  };
+
   return (
     <>
       <Container>
@@ -43,15 +51,53 @@ export const Room = () => {
           </div>
           <div className="div-timer">
             <p className="label-input-timer">Definir Timer: </p>
-            <TimePicker
-              placeholder="Definir Timer"
-              defaultValue={dayjs("12:08", format)}
-              format={format}
-            />
-            <div className="div-btn-play">
-              <Button type="primary" shape="round" size="large">
-                Começar
-              </Button>
+            <div>
+              <TimePicker
+                placeholder="Definir Timer"
+                defaultValue={dayjs("12:08", format)}
+                format={format}
+              />
+              <div className="div-btn-play">
+                <Button type="primary" shape="round" size="large">
+                  Começar
+                </Button>
+              </div>
+            </div>
+            <div className="btn-options">
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  margin: "auto",
+                }}
+              >
+                <div style={{ margin: 10 }}>
+                  <img src={Timer} alt="Timer" />
+                </div>
+                <div>
+                  <Countdown
+                    className="countdown"
+                    value={deadline}
+                    onFinish={onFinish}
+                  />
+                </div>
+              </div>
+              <div>
+                <Button type="primary" shape="round" size="large">
+                  Zerar timer
+                </Button>
+                <Button type="primary" shape="round" size="large">
+                  Reiniciar
+                </Button>
+              </div>
+              <div>
+                <Button type="primary" shape="round" size="large">
+                  Finalizar
+                </Button>
+                <Button type="primary" shape="round" size="large">
+                  Revelar Votos
+                </Button>
+              </div>
             </div>
             <hr />
             <Users />

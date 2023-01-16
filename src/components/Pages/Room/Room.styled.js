@@ -17,7 +17,12 @@ export const Container = styled.div`
     font-size: 14px;
     font-family: "Roboto";
     color: white;
-    width: 120px;
+    width: 140px;
+    &:focus {
+      background: white;
+      border: 3px solid #5151c4;
+      color: #1e1e1e;
+    }
   }
   .div-btn-copy,
   .div-btn-play {
@@ -110,5 +115,17 @@ export const Container = styled.div`
   }
   .p-card-3 {
     transform: rotate(0.5turn);
+  }
+
+  .btn-options {
+    align-items: center;
+    display: grid;
+    justify-content: center;
+    Button {
+      margin: 10px;
+    }
+    .countdown {
+      margin: 20px 0px 20px 0px;
+    }
   }
 `;

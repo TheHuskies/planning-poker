@@ -84,6 +84,13 @@ export const Container = styled.div`
     border: 1px solid rgba(0, 0, 0, 0.34);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
+    &:hover,
+    &:after {
+      -moz-transform: scale(1.1);
+      -webkit-transform: scale(1.1);
+      transform: scale(1.1);
+      box-shadow: 0px 4px 4px rgba(84, 160, 255, 0.8);
+    }
     p {
       margin: auto;
       font-family: "Inter";

@@ -5,12 +5,14 @@ import dayjs from "dayjs";
 import { Container } from "./Room.styled";
 import { Users } from "../../Users";
 import Timer from "./../../../assets/icons/timer.svg";
+import { useState } from "react";
 const { Countdown } = Statistic;
 
 const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30;
 
 export const Room = () => {
   const format = "HH:mm";
+  const [btnStart, setBtnStart] = useState(false);
 
   let fib = [1, 1];
   let limit = 8;
@@ -50,7 +52,7 @@ export const Room = () => {
               </Button>
             </div>
           </div>
-          <div className="div-timer">
+          <div className="div-game">
             <p className="label-input-timer">Definir Timer: </p>
             <div>
               <TimePicker

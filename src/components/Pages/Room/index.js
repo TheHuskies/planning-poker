@@ -30,11 +30,22 @@ export const Room = () => {
     }
     return data;
   }
-  console.log(fibonacci(fib, 20));
 
   const onFinish = () => {
     console.log("finished!");
   };
+
+  function buttonClicked() {
+    var copyTextareaBtn = document.querySelector(".copy");
+    copyTextareaBtn.addEventListener("click", buttonClicked, true);
+    var copyTextarea = document.querySelector(".input-copy");
+    copyTextarea.select();
+    try {
+      document.execCommand("copy");
+    } catch (err) {
+      console.error("Oops, unable to copy");
+    }
+  }
 
   return (
     <>
@@ -43,65 +54,87 @@ export const Room = () => {
           <div className="div-link">
             <p className="label-input-link">Compartilhe o link da sala: </p>
             <Input
+              className="input-copy"
               placeholder="Link da sala"
               value={"https://tenor.com/bIgLu.gif"}
             />
             <div className="div-btn-copy">
-              <Button type="primary" shape="round" size="large">
+              <Button
+                className="copy"
+                type="primary"
+                shape="round"
+                size="large"
+                onClick={() => buttonClicked()}
+              >
                 Copiar
               </Button>
             </div>
           </div>
           <div className="div-game">
-            <p className="label-input-timer">Definir Timer: </p>
-            <div>
-              <TimePicker
-                placeholder="Definir Timer"
-                defaultValue={dayjs("12:08", format)}
-                format={format}
-              />
-              <div className="div-btn-play">
-                <Button type="primary" shape="round" size="large">
-                  Começar
-                </Button>
-              </div>
-            </div>
-            <div className="btn-options">
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  margin: "auto",
-                }}
-              >
-                <div style={{ margin: 10 }}>
-                  <img src={Timer} alt="Timer" />
+            {!btnStart ? (
+              <>
+                <p className="label-input-timer">Definir Timer: </p>
+                <div>
+                  <TimePicker
+                    placeholder="Definir Timer"
+                    defaultValue={dayjs("12:08", format)}
+                    format={format}
+                  />
+                  <div className="div-btn-play">
+                    <Button
+                      type="primary"
+                      shape="round"
+                      size="large"
+                      onClick={(e) => setBtnStart(true)}
+                    >
+                      Começar
+                    </Button>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className="btn-options">
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    margin: "auto",
+                  }}
+                >
+                  <div style={{ margin: 10 }}>
+                    <img src={Timer} alt="Timer" />
+                  </div>
+                  <div>
+                    <Countdown
+                      className="countdown"
+                      value={deadline}
+                      onFinish={onFinish}
+                    />
+                  </div>
                 </div>
                 <div>
-                  <Countdown
-                    className="countdown"
-                    value={deadline}
-                    onFinish={onFinish}
-                  />
+                  <Button type="primary" shape="round" size="large">
+                    Zerar timer
+                  </Button>
+                  <Button
+                    type="primary"
+                    shape="round"
+                    size="large"
+                    onClick={() => setBtnStart(false)}
+                  >
+                    Reiniciar
+                  </Button>
+                </div>
+                <div>
+                  <Button type="primary" shape="round" size="large">
+                    Finalizar
+                  </Button>
+                  <Button type="primary" shape="round" size="large">
+                    Revelar Votos
+                  </Button>
                 </div>
               </div>
-              <div>
-                <Button type="primary" shape="round" size="large">
-                  Zerar timer
-                </Button>
-                <Button type="primary" shape="round" size="large">
-                  Reiniciar
-                </Button>
-              </div>
-              <div>
-                <Button type="primary" shape="round" size="large">
-                  Finalizar
-                </Button>
-                <Button type="primary" shape="round" size="large">
-                  Revelar Votos
-                </Button>
-              </div>
-            </div>
+            )}
             <hr />
             <Users />
             <Users />
@@ -115,9 +148,9 @@ export const Room = () => {
           </div>
           <a href="">
             <div className="div-card">
-              {fibonacci(fib, 20).map((fibb) => (
+              {fibonacci(fib, 20).map((fibb, index) => (
                 <div
-                  key={fibb}
+                  key={index}
                   style={{ display: "flex", margin: "22px 22px 0px 0px" }}
                 >
                   <div className="card-first">

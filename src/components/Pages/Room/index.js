@@ -1,11 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
+import React, { useState } from "react";
 import { Button, Input, TimePicker, Statistic } from "antd";
 import dayjs from "dayjs";
 import { Container } from "./Room.styled";
 import { Users } from "../../Users";
 import Timer from "./../../../assets/icons/timer.svg";
-import { useState } from "react";
+import { copyTextLink } from "./../../Utils/clipBoard";
+import { fibonacci } from "../../Utils/sequences";
 const { Countdown } = Statistic;
 
 const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30;
@@ -15,37 +16,10 @@ export const Room = () => {
   const [btnStart, setBtnStart] = useState(false);
 
   let fib = [1, 1];
-  let limit = 8;
-  function fibonacci(nums, breakLimit) {
-    let data = [1, 1];
-
-    for (let i = 2; i < limit; i++) {
-      nums[i] = nums[i - 1] + nums[i - 2];
-      if (nums[i] > breakLimit) {
-        data.push(nums[i]);
-        break;
-      } else {
-        data.push(nums[i]);
-      }
-    }
-    return data;
-  }
 
   const onFinish = () => {
     console.log("finished!");
   };
-
-  function buttonClicked() {
-    var copyTextareaBtn = document.querySelector(".copy");
-    copyTextareaBtn.addEventListener("click", buttonClicked, true);
-    var copyTextarea = document.querySelector(".input-copy");
-    copyTextarea.select();
-    try {
-      document.execCommand("copy");
-    } catch (err) {
-      console.error("Oops, unable to copy");
-    }
-  }
 
   return (
     <>
@@ -64,7 +38,7 @@ export const Room = () => {
                 type="primary"
                 shape="round"
                 size="large"
-                onClick={() => buttonClicked()}
+                onClick={() => copyTextLink()}
               >
                 Copiar
               </Button>
@@ -146,13 +120,14 @@ export const Room = () => {
               Story: Modal de Cadastro de Usuário
             </p>
           </div>
-          <a href="">
-            <div className="div-card">
-              {fibonacci(fib, 20).map((fibb, index) => (
-                <div
-                  key={index}
-                  style={{ display: "flex", margin: "22px 22px 0px 0px" }}
-                >
+
+          <div className="div-card">
+            {fibonacci(fib, 20).map((fibb, index) => (
+              <div
+                key={index}
+                style={{ display: "flex", margin: "22px 22px 0px 0px" }}
+              >
+                <a href="">
                   <div className="card-first">
                     <p>{fibb}</p>
                     <div className="card-second">
@@ -160,9 +135,11 @@ export const Room = () => {
                     </div>
                     <p className="p-card-3">{fibb}</p>
                   </div>
-                </div>
-              ))}
-              <div style={{ display: "flex", margin: "22px 22px 0px 0px" }}>
+                </a>
+              </div>
+            ))}
+            <div style={{ display: "flex", margin: "22px 22px 0px 0px" }}>
+              <a href="">
                 <div className="card-first">
                   <p>?</p>
                   <div className="card-second">
@@ -170,9 +147,9 @@ export const Room = () => {
                   </div>
                   <p className="p-card-3">?</p>
                 </div>
-              </div>
+              </a>
             </div>
-          </a>
+          </div>
         </div>
       </Container>
     </>

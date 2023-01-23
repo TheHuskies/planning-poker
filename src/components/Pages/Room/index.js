@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
 import { Button, Input, TimePicker, Statistic } from "antd";
 import dayjs from "dayjs";
@@ -6,7 +5,7 @@ import { Container } from "./Room.styled";
 import { Users } from "../../Users";
 import Timer from "./../../../assets/icons/timer.svg";
 import { copyTextLink } from "./../../Utils/clipBoard";
-import { fibonacci } from "../../Utils/sequences";
+import { Cards } from "../../Cards";
 const { Countdown } = Statistic;
 
 const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30;
@@ -14,9 +13,6 @@ const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30;
 export const Room = () => {
   const format = "HH:mm";
   const [btnStart, setBtnStart] = useState(false);
-
-  let fib = [1, 1];
-
   const onFinish = () => {
     console.log("finished!");
   };
@@ -120,36 +116,7 @@ export const Room = () => {
               Story: Modal de Cadastro de Usuário
             </p>
           </div>
-
-          <div className="div-card">
-            {fibonacci(fib, 20).map((fibb, index) => (
-              <div
-                key={index}
-                style={{ display: "flex", margin: "22px 22px 0px 0px" }}
-              >
-                <a href="">
-                  <div className="card-first">
-                    <p>{fibb}</p>
-                    <div className="card-second">
-                      <p>{fibb}</p>
-                    </div>
-                    <p className="p-card-3">{fibb}</p>
-                  </div>
-                </a>
-              </div>
-            ))}
-            <div style={{ display: "flex", margin: "22px 22px 0px 0px" }}>
-              <a href="">
-                <div className="card-first">
-                  <p>?</p>
-                  <div className="card-second">
-                    <p>?</p>
-                  </div>
-                  <p className="p-card-3">?</p>
-                </div>
-              </a>
-            </div>
-          </div>
+          <Cards />
         </div>
       </Container>
     </>

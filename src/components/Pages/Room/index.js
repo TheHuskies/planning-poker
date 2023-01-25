@@ -6,6 +6,7 @@ import { Users } from "../../Users";
 import Timer from "./../../../assets/icons/timer.svg";
 import { copyTextLink } from "./../../Utils/clipBoard";
 import { Cards } from "../../Cards";
+import { Chart } from "../../Chart";
 const { Countdown } = Statistic;
 
 const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30;
@@ -13,6 +14,8 @@ const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30;
 export const Room = () => {
   const format = "HH:mm";
   const [btnStart, setBtnStart] = useState(false);
+  const [btnFinish, setBtnFinish] = useState(false);
+
   const onFinish = () => {
     console.log("finished!");
   };
@@ -90,13 +93,21 @@ export const Room = () => {
                     type="primary"
                     shape="round"
                     size="large"
-                    onClick={() => setBtnStart(false)}
+                    onClick={() => {
+                      setBtnStart(false);
+                      setBtnFinish(false);
+                    }}
                   >
                     Reiniciar
                   </Button>
                 </div>
                 <div>
-                  <Button type="primary" shape="round" size="large">
+                  <Button
+                    type="primary"
+                    shape="round"
+                    size="large"
+                    onClick={() => setBtnFinish(true)}
+                  >
                     Finalizar
                   </Button>
                   <Button type="primary" shape="round" size="large">
@@ -116,7 +127,21 @@ export const Room = () => {
               Story: Modal de Cadastro de Usuário
             </p>
           </div>
-          <Cards />
+          {!btnFinish ? (
+            <>
+              <Cards />
+            </>
+          ) : (
+            <>
+              <div style={{ height: "fit-content" }}>
+                <p className="title" style={{ width: "max-content" }}>
+                  Resultado dos Votos
+                </p>
+              </div>
+
+              <Chart />
+            </>
+          )}
         </div>
       </Container>
     </>

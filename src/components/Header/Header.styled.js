@@ -20,3 +20,7 @@ export const Container = styled.div`
     color: black;
   }
 `;
+
+export const StyledLink = styled.div`
+  display: flex;
+`;

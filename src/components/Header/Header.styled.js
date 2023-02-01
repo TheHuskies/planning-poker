@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  display: flex;
   margin: 22px 20px 7px 25px;
   p {
     font-size: 22px;
@@ -23,4 +22,5 @@ export const Container = styled.div`
 
 export const StyledLink = styled.div`
   display: flex;
+  width: 100%;
 `;

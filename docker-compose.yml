@@ -1,0 +1,30 @@
+version: '3'
+services:
+  backend:
+    image: kbdemiranda/planning-poker:11
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+    networks:
+      - app-network
+    environment:
+      - DATABASE_URL=jdbc:postgresql://database:5432/postgres
+      - USERNAME=postgres
+      - PASSWORD=postgres
+
+
+  database:
+    image: kbdemiranda/postgres:bullseye
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

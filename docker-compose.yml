@@ -1,7 +1,7 @@
 version: '3'
 services:
   backend:
-    image: kbdemiranda/planning-poker:11
+    image: kbdemiranda/planning-poker:corretto
     ports:
       - "8080:8080"
     depends_on:

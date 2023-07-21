@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Form, Input, InputNumber, Modal, Select } from "antd";
 import { Container } from "./ModalRegister.styled";
 import { useState } from "react";
 import avatar from "../../../assets/icons/avatar-generic.png";
+import CreateRoom from "../../../services/CreateRoom";
 
 const validatePrimeNumber = (number) => {
   if (number >= 2 && number <= 20) {
@@ -30,6 +31,9 @@ export const ModalRegister = (props) => {
   const [number, setNumber] = useState({
     value: 2,
   });
+
+  const [room, setRoom] = useState([]);
+  console.log(room);
   const onNumberChange = (value) => {
     setNumber({
       ...validatePrimeNumber(value),
@@ -43,6 +47,28 @@ export const ModalRegister = (props) => {
   const onSearch = (value) => {
     console.log("search:", value);
   };
+
+  const roomData = {
+    owner: "Ariane",
+    participantsCount: 3,
+    methodology: "Fibonacci",
+  };
+
+  useEffect(() => {
+    console.log("Caiu aqui 1");
+    try {
+      console.log("Caiu aqui 2");
+      CreateRoom(roomData).then((response) => {
+        console.log(response);
+        console.log("Caiu aqui 3");
+        const rooms = response.data;
+        setRoom(rooms);
+        console.log(rooms);
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  });
 
   return (
     <>

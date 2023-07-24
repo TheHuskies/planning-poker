@@ -1,6 +1,6 @@
 import { Button, Col, Row } from "antd";
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import playCards from "../../../assets/images/play_card.jpg";
 import { ModalRegister } from "../../Modal/ModalRegister";
 import { ModalSuccess } from "../../Modal/ModalSuccess";
@@ -9,13 +9,16 @@ import { Container } from "./Home.styled";
 export const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
-  const history = useHistory();
+  const history = useNavigate();
 
   const handleClick = (event) => {
     const element = document.getElementById("btn-next");
     if (element) {
       element.addEventListener("click", setIsFeedbackOpen(true));
-      setTimeout(() => history.push("/create-story"), 5000);
+      setTimeout(() => {
+        setIsModalOpen(false);
+        history("/create-story"); // Use o hook useNavigate para a navegação
+      }, 5000);
     }
     element.addEventListener("click", setIsModalOpen(false));
     return () => {

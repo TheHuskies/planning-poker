@@ -12,28 +12,28 @@ export const Cards = () => {
           key={index}
           style={{ display: "flex", margin: "22px 22px 0px 0px" }}
         >
-          <a href="">
-            <div className="card-first">
+          {/* <a href=""> */}
+          <div className="card-first">
+            <p>{fibb}</p>
+            <div className="card-second">
               <p>{fibb}</p>
-              <div className="card-second">
-                <p>{fibb}</p>
-              </div>
-              <p className="p-card-3">{fibb}</p>
             </div>
-          </a>
+            <p className="p-card-3">{fibb}</p>
+          </div>
+          {/* </a> */}
         </div>
       ))}
       {/* // coment */}
       <div style={{ display: "flex", margin: "22px 22px 0px 0px" }}>
-        <a href="">
-          <div className="card-first">
+        {/* <a href=""> */}
+        <div className="card-first">
+          <p>?</p>
+          <div className="card-second">
             <p>?</p>
-            <div className="card-second">
-              <p>?</p>
-            </div>
-            <p className="p-card-3">?</p>
           </div>
-        </a>
+          <p className="p-card-3">?</p>
+        </div>
+        {/* </a> */}
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button, Form, Input, InputNumber, Modal, Select } from "antd";
 import { Container } from "./ModalRegister.styled";
 import { useState } from "react";
@@ -33,7 +33,8 @@ export const ModalRegister = (props) => {
   });
 
   const [room, setRoom] = useState([]);
-  console.log(room);
+  const [state, setState] = useState(false);
+  // console.log(room);
   const onNumberChange = (value) => {
     setNumber({
       ...validatePrimeNumber(value),
@@ -54,21 +55,19 @@ export const ModalRegister = (props) => {
     methodology: "Fibonacci",
   };
 
-  useEffect(() => {
-    console.log("Caiu aqui 1");
-    try {
-      console.log("Caiu aqui 2");
-      CreateRoom(roomData).then((response) => {
-        console.log(response);
-        console.log("Caiu aqui 3");
-        const rooms = response.data;
-        setRoom(rooms);
-        console.log(rooms);
-      });
-    } catch (error) {
-      console.log(error.message);
+  const handleCreateRoom = () => {
+    if (!state) {
+      CreateRoom(roomData)
+        .then((response) => {
+          console.log("Resposta da requisição:", response.data);
+          // setRoom(response.data);
+        })
+        .catch((error) => {
+          console.error("Erro na requisição:", error);
+        });
+      setState(true);
     }
-  });
+  };
 
   return (
     <>
@@ -87,7 +86,7 @@ export const ModalRegister = (props) => {
               border: "none",
               margin: 5,
             }}
-            onClick={props.next}
+            onClick={handleCreateRoom}
           >
             Próximo
           </Button>,

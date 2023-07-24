@@ -139,11 +139,11 @@ export const CreateStory = () => {
       render: () => (
         <>
           <Tooltip placement="bottom" title={"Iniciar jogo"}>
-            <Link to="/room">
-              <StyledIcon>
-                <img src={Play} alt="Play" />
-              </StyledIcon>
-            </Link>
+            {/* <Link to="/room"> */}
+            <StyledIcon>
+              <img src={Play} alt="Play" />
+            </StyledIcon>
+            {/* </Link> */}
           </Tooltip>
         </>
       ),

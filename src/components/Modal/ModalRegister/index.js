@@ -28,13 +28,14 @@ const formItemLayout = {
 
 export const ModalRegister = (props) => {
   const [form] = Form.useForm();
+  const [room, setRoom] = useState([]);
+  const [state, setState] = useState(false);
+  const [name, setName] = useState("");
   const [number, setNumber] = useState({
     value: 2,
   });
+  const [methodology, setMethodology] = useState("");
 
-  const [room, setRoom] = useState([]);
-  const [state, setState] = useState(false);
-  // console.log(room);
   const onNumberChange = (value) => {
     setNumber({
       ...validatePrimeNumber(value),
@@ -42,18 +43,25 @@ export const ModalRegister = (props) => {
     });
   };
 
-  const onChange = (value) => {
-    console.log(`selected ${value}`);
+  const handleSelect = (event) => {
+    setMethodology(event.target.value);
   };
+
+  const handleInputName = (event) => {
+    setName(event.target.value);
+  };
+
   const onSearch = (value) => {
     console.log("search:", value);
   };
 
   const roomData = {
-    owner: "Ariane",
-    participantsCount: 3,
-    methodology: "Fibonacci",
+    owner: name,
+    participantsCount: number,
+    methodology: "methodology",
   };
+
+  console.log(roomData);
 
   const handleCreateRoom = () => {
     if (!state) {
@@ -104,7 +112,12 @@ export const ModalRegister = (props) => {
             <div>
               <Form layout="vertical" form={form}>
                 <Form.Item label="Seu nome: " required>
-                  <Input placeholder="Seu nome" />
+                  <Input
+                    placeholder="Seu nome"
+                    name="name"
+                    value={name}
+                    onChange={handleInputName}
+                  />
                 </Form.Item>
                 <Form.Item
                   {...formItemLayout}
@@ -121,7 +134,7 @@ export const ModalRegister = (props) => {
                   />
                 </Form.Item>
                 <Form.Item
-                  name="metodologia"
+                  name="methodology"
                   label="Tipo de sequência / Metodologia"
                   rules={[
                     {
@@ -133,7 +146,7 @@ export const ModalRegister = (props) => {
                     showSearch
                     placeholder="Selecione a opção de que deseja..."
                     optionFilterProp="children"
-                    onChange={onChange}
+                    onChange={handleSelect}
                     onSearch={onSearch}
                     filterOption={(input, option) =>
                       (option?.label ?? "")

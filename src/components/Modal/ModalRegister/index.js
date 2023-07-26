@@ -28,7 +28,7 @@ const formItemLayout = {
 
 export const ModalRegister = (props) => {
   const [form] = Form.useForm();
-  const [room, setRoom] = useState([]);
+
   const [state, setState] = useState(false);
   const [name, setName] = useState("");
   const [number, setNumber] = useState({
@@ -43,8 +43,8 @@ export const ModalRegister = (props) => {
     });
   };
 
-  const handleSelect = (event) => {
-    setMethodology(event.target.value);
+  const handleSelect = (value, option) => {
+    setMethodology(value);
   };
 
   const handleInputName = (event) => {
@@ -55,24 +55,37 @@ export const ModalRegister = (props) => {
     console.log("search:", value);
   };
 
-  const roomData = {
-    owner: name,
-    participantsCount: number,
-    methodology: "methodology",
-  };
-
-  console.log(roomData);
-
   const handleCreateRoom = () => {
     if (!state) {
+      const roomData = {
+        owner: name,
+        participantsCount: number.value,
+        methodology: methodology,
+      };
+
       CreateRoom(roomData)
         .then((response) => {
           console.log("Resposta da requisição:", response.data);
-          // setRoom(response.data);
         })
         .catch((error) => {
           console.error("Erro na requisição:", error);
+          if (error.response) {
+            // Erro de resposta do servidor (código de status fora do range 2xx)
+            console.error("Data da resposta:", error.response.data);
+            console.error(
+              "Código de status da resposta:",
+              error.response.status
+            );
+            console.error("Cabeçalhos da resposta:", error.response.headers);
+          } else if (error.request) {
+            // A requisição foi feita, mas não houve resposta do servidor
+            console.error("Sem resposta do servidor");
+          } else {
+            // Algum erro ocorreu durante a requisição
+            console.error("Erro durante a requisição:", error.message);
+          }
         });
+
       setState(true);
     }
   };

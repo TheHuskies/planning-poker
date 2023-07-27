@@ -12,6 +12,7 @@ services:
       - DATABASE_URL=jdbc:postgresql://database:5432/postgres
       - USERNAME=postgres
       - PASSWORD=postgres
+      - JWT_SECRET=1a2b3a4b5a6b7a8b9a10b11a12b13a14b15a16b17a18b19a20b21a22b23a
 
 
   database:

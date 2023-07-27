@@ -17,7 +17,7 @@ export const Home = () => {
       element.addEventListener("click", setIsFeedbackOpen(true));
       setTimeout(() => {
         setIsModalOpen(false);
-        history("/create-story"); // Use o hook useNavigate para a navegação
+        history("/create-story");
       }, 5000);
     }
     element.addEventListener("click", setIsModalOpen(false));

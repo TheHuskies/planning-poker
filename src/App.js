@@ -9,8 +9,10 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Header />
         <Routes>
+          <Route
+            render={({ location }) => location.pathname !== "/" && <Header />}
+          />
           <Route path="/" element={<Home />} />
           <Route path="/story" element={<CreateStory />} />
           <Route path="/room" element={<Room />} />

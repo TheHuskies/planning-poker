@@ -32,7 +32,7 @@ export const ModalRegister = (props) => {
   const [btnNext, setBtnNext] = useState("");
   const [name, setName] = useState("");
   const [number, setNumber] = useState({
-    value: 2,
+    value: 2, // valor minimo de participantes
   });
   const [methodology, setMethodology] = useState("");
 

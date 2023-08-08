@@ -4,6 +4,7 @@ import { Container } from "./ModalRegister.styled";
 import { useState } from "react";
 import avatar from "../../../assets/icons/avatar-generic.png";
 import CreateRoom from "../../../services/CreateRoom";
+import { RoomProvider, useRoom } from "./../../Context/RoomContext";
 
 const validatePrimeNumber = (number) => {
   if (number >= 2 && number <= 20) {
@@ -35,6 +36,7 @@ export const ModalRegister = (props) => {
     value: 2, // valor minimo de participantes
   });
   const [methodology, setMethodology] = useState("");
+  const { room, setRoom } = useRoom();
 
   const onNumberChange = (value) => {
     setNumber({
@@ -64,7 +66,8 @@ export const ModalRegister = (props) => {
       };
       CreateRoom(roomData)
         .then((response) => {
-          console.log("Resposta da requisição:", response.data);
+          const rooms = response.data;
+          setRoom(rooms);
         })
         .catch((error) => {
           console.error("Erro na requisição:", error);
@@ -73,104 +76,107 @@ export const ModalRegister = (props) => {
       setBtnNext(props.next);
     }
   };
+  console.log("Room", room);
 
   return (
     <>
-      <Modal
-        open={props.open}
-        onCancel={props.close}
-        footer={[
-          <Button
-            key={"index"}
-            id="btn-next"
-            type="primary"
-            shape="round"
-            size="large"
-            style={{
-              backgroundColor: "#a980f8",
-              border: "none",
-              margin: 5,
-            }}
-            onClick={handleCreateRoom}
-          >
-            Próximo
-          </Button>,
-        ]}
-      >
-        <Container>
-          <p className="title">
-            Preencha o formulário abaixo para prosseguir com a criação da sua
-            sala:
-          </p>
-          <div style={{ display: "flex", marginTop: 50 }}>
-            <div>
-              <img src={avatar} alt="Avatar" />
-            </div>
-            <div>
-              <Form layout="vertical" form={form}>
-                <Form.Item label="Seu nome: " required>
-                  <Input
-                    placeholder="Seu nome"
-                    name="name"
-                    value={name}
-                    onChange={handleInputName}
-                  />
-                </Form.Item>
-                <Form.Item
-                  {...formItemLayout}
-                  label="Número de participantes"
-                  validateStatus={number.validateStatus}
-                  help={number.errorMsg}
-                  required
-                >
-                  <InputNumber
-                    min={2}
-                    max={20}
-                    value={number.value}
-                    onChange={onNumberChange}
-                  />
-                </Form.Item>
-                <Form.Item
-                  name="methodology"
-                  label="Tipo de sequência / Metodologia"
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
-                >
-                  <Select
-                    showSearch
-                    placeholder="Selecione a opção de que deseja..."
-                    optionFilterProp="children"
-                    onChange={handleSelect}
-                    onSearch={onSearch}
-                    filterOption={(input, option) =>
-                      (option?.label ?? "")
-                        .toLowerCase()
-                        .includes(input.toLowerCase())
-                    }
-                    options={[
+      <RoomProvider>
+        <Modal
+          open={props.open}
+          onCancel={props.close}
+          footer={[
+            <Button
+              key={"index"}
+              id="btn-next"
+              type="primary"
+              shape="round"
+              size="large"
+              style={{
+                backgroundColor: "#a980f8",
+                border: "none",
+                margin: 5,
+              }}
+              onClick={handleCreateRoom}
+            >
+              Próximo
+            </Button>,
+          ]}
+        >
+          <Container>
+            <p className="title">
+              Preencha o formulário abaixo para prosseguir com a criação da sua
+              sala:
+            </p>
+            <div style={{ display: "flex", marginTop: 50 }}>
+              <div>
+                <img src={avatar} alt="Avatar" />
+              </div>
+              <div>
+                <Form layout="vertical" form={form}>
+                  <Form.Item label="Seu nome: " required>
+                    <Input
+                      placeholder="Seu nome"
+                      name="name"
+                      value={name}
+                      onChange={handleInputName}
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    {...formItemLayout}
+                    label="Número de participantes"
+                    validateStatus={number.validateStatus}
+                    help={number.errorMsg}
+                    required
+                  >
+                    <InputNumber
+                      min={2}
+                      max={20}
+                      value={number.value}
+                      onChange={onNumberChange}
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    name="methodology"
+                    label="Tipo de sequência / Metodologia"
+                    rules={[
                       {
-                        value: "Fibonacci",
-                        label: "Fibonacci",
-                      },
-                      {
-                        value: "Scrumm",
-                        label: "Scrumm",
-                      },
-                      {
-                        value: "Sequencial",
-                        label: "Sequencial",
+                        required: true,
                       },
                     ]}
-                  />
-                </Form.Item>
-              </Form>
+                  >
+                    <Select
+                      showSearch
+                      placeholder="Selecione a opção de que deseja..."
+                      optionFilterProp="children"
+                      onChange={handleSelect}
+                      onSearch={onSearch}
+                      filterOption={(input, option) =>
+                        (option?.label ?? "")
+                          .toLowerCase()
+                          .includes(input.toLowerCase())
+                      }
+                      options={[
+                        {
+                          value: "Fibonacci",
+                          label: "Fibonacci",
+                        },
+                        {
+                          value: "Scrumm",
+                          label: "Scrumm",
+                        },
+                        {
+                          value: "Sequencial",
+                          label: "Sequencial",
+                        },
+                      ]}
+                    />
+                  </Form.Item>
+                </Form>
+              </div>
             </div>
-          </div>
-        </Container>
-      </Modal>
+          </Container>
+        </Modal>
+      </RoomProvider>
     </>
   );
 };

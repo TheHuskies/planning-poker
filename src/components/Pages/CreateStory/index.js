@@ -5,6 +5,7 @@ import TextArea from "antd/lib/input/TextArea";
 import Delete from "../../../assets/icons/delete.svg";
 import Play from "../../../assets/icons/play.svg";
 import { Link } from "react-router-dom";
+import { useRoom } from "../../Context/RoomContext";
 
 const EditableContext = React.createContext(null);
 
@@ -88,6 +89,7 @@ const EditableCell = ({
 export const CreateStory = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
+  const { room } = useRoom();
   const [dataSource, setDataSource] = useState([
     {
       key: "0",
@@ -190,6 +192,8 @@ export const CreateStory = () => {
       }),
     };
   });
+
+  console.log("Teste", room);
   return (
     <Container>
       <Button

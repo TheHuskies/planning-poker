@@ -5,19 +5,22 @@ import { CreateStory } from "./components/Pages/CreateStory";
 import { Home } from "./components/Pages/Home";
 import { Room } from "./components/Pages/Room";
 import { RoomProvider } from "./components/Context/RoomContext";
+import { StoryProvider } from "./components/Context/StoryContext";
 
 function App() {
   return (
     <div className="App">
       <RoomProvider>
-        <Router>
-          <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/story" element={<CreateStory />} />
-            <Route path="/room" element={<Room />} />
-          </Routes>
-        </Router>
+        <StoryProvider>
+          <Router>
+            <Header />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/story" element={<CreateStory />} />
+              <Route path="/room/:id" element={<Room />} />
+            </Routes>
+          </Router>
+        </StoryProvider>
       </RoomProvider>
     </div>
   );

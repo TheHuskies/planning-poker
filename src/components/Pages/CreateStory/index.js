@@ -92,8 +92,8 @@ export const CreateStory = () => {
   const [form] = Form.useForm();
   const { room } = useRoom();
   const { story, setStory } = useStory();
-  const { description, setDescription } = useState("");
   const [dataSource, setDataSource] = useState([]);
+  const [description, setDescription] = useState("");
   const [count, setCount] = useState(2);
   const handleDelete = (key) => {
     const newData = dataSource.filter((item) => item.key !== key);
@@ -147,7 +147,7 @@ export const CreateStory = () => {
     const newData = {
       key: count,
       name: story,
-      description: "",
+      description: description,
       methodology: room.methodology,
     };
     setDataSource([...dataSource, newData]);
@@ -203,6 +203,10 @@ export const CreateStory = () => {
     setStory(event.target.value);
   };
 
+  const handleInputDescription = (event) => {
+    setDescription(event.target.value);
+  };
+
   console.log("Teste", story);
   return (
     <StoryProvider>
@@ -249,6 +253,9 @@ export const CreateStory = () => {
             >
               <TextArea
                 placeholder="Escreva aqui a descrição da Story"
+                name="description"
+                value={description}
+                onChange={handleInputDescription}
                 rows={4}
               />
             </Form.Item>

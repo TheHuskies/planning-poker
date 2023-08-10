@@ -6,6 +6,7 @@ import Delete from "../../../assets/icons/delete.svg";
 import Play from "../../../assets/icons/play.svg";
 import { Link } from "react-router-dom";
 import { useRoom } from "../../Context/RoomContext";
+import { StoryProvider, useStory } from "../../Context/StoryContext";
 
 const EditableContext = React.createContext(null);
 
@@ -90,18 +91,9 @@ export const CreateStory = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
   const { room } = useRoom();
-  const [dataSource, setDataSource] = useState([
-    {
-      key: "0",
-      name: "Modal de Cadastro",
-      description: "-",
-    },
-    {
-      key: "1",
-      name: "API de Cadastro",
-      description: "API de cadastro com dados do usuário",
-    },
-  ]);
+  const { story, setStory } = useStory();
+  const { description, setDescription } = useState("");
+  const [dataSource, setDataSource] = useState([]);
   const [count, setCount] = useState(2);
   const handleDelete = (key) => {
     const newData = dataSource.filter((item) => item.key !== key);
@@ -119,8 +111,8 @@ export const CreateStory = () => {
       dataIndex: "description",
     },
     {
-      title: "Tipo de sequência",
-      dataIndex: "sequence",
+      title: "Tipo de metodologia",
+      dataIndex: "methodology",
     },
     {
       render: (_, record) =>
@@ -141,11 +133,11 @@ export const CreateStory = () => {
       render: () => (
         <>
           <Tooltip placement="bottom" title={"Iniciar jogo"}>
-            {/* <Link to="/room"> */}
-            <StyledIcon>
-              <img src={Play} alt="Play" />
-            </StyledIcon>
-            {/* </Link> */}
+            <Link to={`/room/${room.roomCode}`}>
+              <StyledIcon>
+                <img src={Play} alt="Play" />
+              </StyledIcon>
+            </Link>
           </Tooltip>
         </>
       ),
@@ -154,9 +146,9 @@ export const CreateStory = () => {
   const handleAdd = () => {
     const newData = {
       key: count,
-      name: "",
+      name: story,
       description: "",
-      sequence: "",
+      methodology: room.methodology,
     };
     setDataSource([...dataSource, newData]);
     setCount(count + 1);
@@ -177,9 +169,23 @@ export const CreateStory = () => {
       cell: EditableCell,
     },
   };
+
   const columns = defaultColumns.map((col) => {
-    if (!col.editable) {
-      return col;
+    if (col.dataIndex === "name") {
+      return {
+        ...col,
+        render: (_, record) => (
+          <EditableCell
+            editable={col.editable}
+            dataIndex={col.dataIndex}
+            title={col.title}
+            record={record}
+            handleSave={handleSave}
+          >
+            {record.name}
+          </EditableCell>
+        ),
+      };
     }
     return {
       ...col,
@@ -193,69 +199,80 @@ export const CreateStory = () => {
     };
   });
 
-  console.log("Teste", room);
+  const handleInputName = (event) => {
+    setStory(event.target.value);
+  };
+
+  console.log("Teste", story);
   return (
-    <Container>
-      <Button
-        onClick={() => setIsModalOpen(true)}
-        type="primary"
-        shape="round"
-        size="large"
-        className="btn-new-story"
-      >
-        Nova História
-      </Button>
-      <Table
-        components={components}
-        rowClassName={() => "editable-row"}
-        bordered
-        dataSource={dataSource}
-        columns={columns}
-        className="table"
-      />
-      <Modal
-        open={isModalOpen}
-        onCancel={() => setIsModalOpen(false)}
-        footer={(null, null)}
-      >
-        <Form layout="vertical" form={form}>
-          <Form.Item
-            name="name"
-            label="Nome da Story: "
-            style={{ fontWeight: 500, marginTop: 20 }}
-          >
-            <Input placeholder="Nome da Story" />
-          </Form.Item>
-          <Form.Item
-            label="Descrição: "
-            name="description"
-            style={{ fontWeight: 500 }}
-          >
-            <TextArea
-              placeholder="Escreva aqui a descrição da Story"
-              rows={4}
-            />
-          </Form.Item>
-        </Form>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            marginLeft: "auto",
-            width: 150,
-          }}
+    <StoryProvider>
+      <Container>
+        <Button
+          onClick={() => setIsModalOpen(true)}
+          type="primary"
+          shape="round"
+          size="large"
+          className="btn-new-story"
         >
-          <Button
-            onClick={handleAdd}
-            type="primary"
-            shape="round"
-            size="large"
-            style={{ background: "#5151c4", border: "none", width: 90 }}
+          Nova História
+        </Button>
+        <Table
+          components={components}
+          rowClassName={() => "editable-row"}
+          bordered
+          dataSource={dataSource}
+          columns={columns}
+          className="table"
+        />
+        <Modal
+          open={isModalOpen}
+          onCancel={() => setIsModalOpen(false)}
+          footer={(null, null)}
+        >
+          <Form layout="vertical" form={form}>
+            <Form.Item
+              name="name"
+              label="Nome da Story: "
+              style={{ fontWeight: 500, marginTop: 20 }}
+            >
+              <Input
+                placeholder="Nome da Story"
+                name="name"
+                value={story}
+                onChange={handleInputName}
+              />
+            </Form.Item>
+            <Form.Item
+              label="Descrição: "
+              name="description"
+              style={{ fontWeight: 500 }}
+            >
+              <TextArea
+                placeholder="Escreva aqui a descrição da Story"
+                rows={4}
+              />
+            </Form.Item>
+          </Form>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginLeft: "auto",
+              width: 150,
+            }}
           >
-            Salvar
-          </Button>
-        </div>
-      </Modal>
-    </Container>
+            <Button
+              onClick={handleAdd}
+              type="primary"
+              shape="round"
+              size="large"
+              style={{ background: "#5151c4", border: "none", width: 90 }}
+            >
+              Salvar
+            </Button>
+          </div>
+        </Modal>
+      </Container>
+    </StoryProvider>
   );
 };

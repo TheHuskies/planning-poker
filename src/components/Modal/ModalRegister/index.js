@@ -76,7 +76,6 @@ export const ModalRegister = (props) => {
       setBtnNext(props.next);
     }
   };
-  console.log("Room", room);
 
   return (
     <>

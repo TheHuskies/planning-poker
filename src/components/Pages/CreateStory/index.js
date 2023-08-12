@@ -7,6 +7,8 @@ import Play from "../../../assets/icons/play.svg";
 import { Link } from "react-router-dom";
 import { useRoom } from "../../Context/RoomContext";
 import { StoryProvider, useStory } from "../../Context/StoryContext";
+import CreateStories from "../../../services/CreateStory,";
+import ListStories from "../../../services/ListStories";
 
 const EditableContext = React.createContext(null);
 
@@ -95,6 +97,20 @@ export const CreateStory = () => {
   const [dataSource, setDataSource] = useState([]);
   const [description, setDescription] = useState("");
   const [count, setCount] = useState(2);
+
+  useEffect(() => {
+    if (room && room.id) {
+      ListStories(room.id)
+        .then((request) => {
+          const data = request.data;
+          setDataSource(data);
+        })
+        .catch((error) => {
+          console.error("Erro na requisição:", error);
+        });
+    }
+  }, []);
+
   const handleDelete = (key) => {
     const newData = dataSource.filter((item) => item.key !== key);
     setDataSource(newData);
@@ -143,6 +159,7 @@ export const CreateStory = () => {
       ),
     },
   ];
+
   const handleAdd = () => {
     const newData = {
       key: count,
@@ -150,9 +167,22 @@ export const CreateStory = () => {
       description: description,
       methodology: room.methodology,
     };
+    const storyData = {
+      title: story,
+      description: description,
+      roomId: room.id,
+    };
     setDataSource([...dataSource, newData]);
     setCount(count + 1);
+    CreateStories(storyData)
+      .then((response) => {
+        console.log("Create story", response.data);
+      })
+      .catch((error) => {
+        console.error("Erro na requisição:", error);
+      });
   };
+
   const handleSave = (row) => {
     const newData = [...dataSource];
     const index = newData.findIndex((item) => row.key === item.key);
@@ -207,7 +237,6 @@ export const CreateStory = () => {
     setDescription(event.target.value);
   };
 
-  console.log("Teste", story);
   return (
     <StoryProvider>
       <Container>

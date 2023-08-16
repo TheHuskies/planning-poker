@@ -99,9 +99,11 @@ export const CreateStory = () => {
   const [count, setCount] = useState(2);
 
   useEffect(() => {
-    if (room && room.id) {
-      ListStories(room.id)
+    const roomId = localStorage.getItem("roomId");
+    if (roomId) {
+      ListStories(roomId)
         .then((request) => {
+          console.log("Resposta: ", request.data);
           const data = request.data;
           setDataSource(data);
         })

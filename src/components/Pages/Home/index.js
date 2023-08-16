@@ -5,11 +5,13 @@ import playCards from "../../../assets/images/play_card.jpg";
 import { ModalRegister } from "../../Modal/ModalRegister";
 import { ModalSuccess } from "../../Modal/ModalSuccess";
 import { Container } from "./Home.styled";
+import { useRoom } from "../../Context/RoomContext";
 
 export const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
   const history = useNavigate();
+  const { room } = useRoom();
 
   const handleClick = (event) => {
     const element = document.getElementById("btn-next");

@@ -99,11 +99,20 @@ export const CreateStory = () => {
   const [count, setCount] = useState(2);
 
   useEffect(() => {
-    const roomId = localStorage.getItem("roomId");
+    if (room.id) {
+      console.log("Definindo roomId no localStorage:", room.id);
+      localStorage.setItem("roomId", room.id);
+    }
+  }, [room.id]);
+
+  const roomId = localStorage.getItem("roomId");
+
+  useEffect(() => {
     if (roomId) {
+      console.log("Recuperando roomId do localStorage:", roomId);
       ListStories(roomId)
         .then((request) => {
-          console.log("Resposta: ", request.data);
+          console.log("Resposta: ", room.id);
           const data = request.data;
           setDataSource(data);
         })
@@ -111,7 +120,7 @@ export const CreateStory = () => {
           console.error("Erro na requisição:", error);
         });
     }
-  }, []);
+  }, [room.id]);
 
   const handleDelete = (key) => {
     const newData = dataSource.filter((item) => item.key !== key);
@@ -167,13 +176,14 @@ export const CreateStory = () => {
       key: count,
       name: story,
       description: description,
-      methodology: room.methodology,
+      methodology: roomId.methodology,
     };
     const storyData = {
       title: story,
       description: description,
-      roomId: room.id,
+      roomId: roomId,
     };
+    console.log("Teste", storyData.name);
     setDataSource([...dataSource, newData]);
     setCount(count + 1);
     CreateStories(storyData)

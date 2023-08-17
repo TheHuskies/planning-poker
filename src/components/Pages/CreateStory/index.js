@@ -96,30 +96,26 @@ export const CreateStory = () => {
   const { story, setStory } = useStory();
   const [dataSource, setDataSource] = useState([]);
   const [description, setDescription] = useState("");
+  const [methodology, setMethodology] = useState("");
   const [count, setCount] = useState(2);
+  const getRoom = localStorage.getItem("room");
+  const getItemRoom = JSON.parse(getRoom);
 
   useEffect(() => {
-    if (room.id) {
-      console.log("Definindo roomId no localStorage:", room.id);
-      localStorage.setItem("roomId", room.id);
-    }
-  }, [room.id]);
+    setMethodology(getItemRoom.methodology);
+  }, [getItemRoom.methodology]);
 
-  const roomId = localStorage.getItem("roomId");
+  console.log(methodology);
 
   useEffect(() => {
-    if (roomId) {
-      console.log("Recuperando roomId do localStorage:", roomId);
-      ListStories(roomId)
-        .then((request) => {
-          console.log("Resposta: ", room.id);
-          const data = request.data;
-          setDataSource(data);
-        })
-        .catch((error) => {
-          console.error("Erro na requisição:", error);
-        });
-    }
+    ListStories(room.id)
+      .then((request) => {
+        const data = request.data;
+        setDataSource(data);
+      })
+      .catch((error) => {
+        console.error("Erro na requisição:", error);
+      });
   }, [room.id]);
 
   const handleDelete = (key) => {
@@ -129,7 +125,7 @@ export const CreateStory = () => {
   const defaultColumns = [
     {
       title: "Nome",
-      dataIndex: "name",
+      dataIndex: "title",
       width: "30%",
       editable: true,
     },
@@ -140,6 +136,7 @@ export const CreateStory = () => {
     {
       title: "Tipo de metodologia",
       dataIndex: "methodology",
+      render: (_, record) => record.methodology,
     },
     {
       render: (_, record) =>
@@ -176,14 +173,16 @@ export const CreateStory = () => {
       key: count,
       name: story,
       description: description,
-      methodology: roomId.methodology,
+      methodology: methodology,
     };
     const storyData = {
       title: story,
       description: description,
-      roomId: roomId,
+      roomId: getItemRoom.id,
     };
-    console.log("Teste", storyData.name);
+
+    console.log("storyData:", storyData);
+
     setDataSource([...dataSource, newData]);
     setCount(count + 1);
     CreateStories(storyData)
@@ -194,6 +193,8 @@ export const CreateStory = () => {
         console.error("Erro na requisição:", error);
       });
   };
+
+  console.log("Teste", dataSource);
 
   const handleSave = (row) => {
     const newData = [...dataSource];
@@ -213,7 +214,7 @@ export const CreateStory = () => {
   };
 
   const columns = defaultColumns.map((col) => {
-    if (col.dataIndex === "name") {
+    if (col.dataIndex === "title" || col.dataIndex === "description") {
       return {
         ...col,
         render: (_, record) => (
@@ -224,7 +225,7 @@ export const CreateStory = () => {
             record={record}
             handleSave={handleSave}
           >
-            {record.name}
+            {record[col.dataIndex]}
           </EditableCell>
         ),
       };

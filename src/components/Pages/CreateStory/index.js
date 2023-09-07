@@ -7,7 +7,7 @@ import Play from "../../../assets/icons/play.svg";
 import { Link } from "react-router-dom";
 import { useRoom } from "../../Context/RoomContext";
 import { StoryProvider, useStory } from "../../Context/StoryContext";
-import CreateStories from "../../../services/CreateStory,";
+import CreateStories from "../../../services/CreateStory";
 import ListStories from "../../../services/ListStories";
 
 const EditableContext = React.createContext(null);
@@ -102,12 +102,6 @@ export const CreateStory = () => {
   const getItemRoom = JSON.parse(getRoom);
 
   useEffect(() => {
-    setMethodology(getItemRoom.methodology);
-  }, [getItemRoom.methodology]);
-
-  console.log(methodology);
-
-  useEffect(() => {
     ListStories(room.id)
       .then((request) => {
         const data = request.data;
@@ -132,11 +126,12 @@ export const CreateStory = () => {
     {
       title: "Descrição",
       dataIndex: "description",
+      editable: true, // Definir como true para permitir edição
     },
     {
       title: "Tipo de metodologia",
       dataIndex: "methodology",
-      render: (_, record) => record.methodology,
+      editable: true, // Definir como true para permitir edição
     },
     {
       render: (_, record) =>
@@ -181,8 +176,6 @@ export const CreateStory = () => {
       roomId: getItemRoom.id,
     };
 
-    console.log("storyData:", storyData);
-
     setDataSource([...dataSource, newData]);
     setCount(count + 1);
     CreateStories(storyData)
@@ -193,8 +186,6 @@ export const CreateStory = () => {
         console.error("Erro na requisição:", error);
       });
   };
-
-  console.log("Teste", dataSource);
 
   const handleSave = (row) => {
     const newData = [...dataSource];
@@ -250,6 +241,10 @@ export const CreateStory = () => {
     setDescription(event.target.value);
   };
 
+  const handleMethodologyChange = (value) => {
+    setMethodology(value);
+  };
+
   return (
     <StoryProvider>
       <Container>
@@ -299,6 +294,18 @@ export const CreateStory = () => {
                 value={description}
                 onChange={handleInputDescription}
                 rows={4}
+              />
+            </Form.Item>
+            <Form.Item
+              label="Tipo de metodologia"
+              name="methodology"
+              style={{ fontWeight: 500 }}
+            >
+              {console.log("APARECE, PORRA!", methodology)}
+              <Input
+                placeholder="Tipo de metodologia"
+                value={getItemRoom.methodology}
+                onChange={(e) => handleMethodologyChange(e.target.value)}
               />
             </Form.Item>
           </Form>

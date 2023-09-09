@@ -96,21 +96,9 @@ export const CreateStory = () => {
   const { story, setStory } = useStory();
   const [dataSource, setDataSource] = useState([]);
   const [description, setDescription] = useState("");
-  const [methodology, setMethodology] = useState("");
   const [count, setCount] = useState(2);
   const getRoom = localStorage.getItem("room");
   const getItemRoom = JSON.parse(getRoom);
-
-  useEffect(() => {
-    ListStories(room.id)
-      .then((request) => {
-        const data = request.data;
-        setDataSource(data);
-      })
-      .catch((error) => {
-        console.error("Erro na requisição:", error);
-      });
-  }, [room.id]);
 
   const handleDelete = (key) => {
     const newData = dataSource.filter((item) => item.key !== key);
@@ -126,12 +114,7 @@ export const CreateStory = () => {
     {
       title: "Descrição",
       dataIndex: "description",
-      editable: true, // Definir como true para permitir edição
-    },
-    {
-      title: "Tipo de metodologia",
-      dataIndex: "methodology",
-      editable: true, // Definir como true para permitir edição
+      editable: true,
     },
     {
       render: (_, record) =>
@@ -168,7 +151,6 @@ export const CreateStory = () => {
       key: count,
       name: story,
       description: description,
-      methodology: methodology,
     };
     const storyData = {
       title: story,
@@ -180,7 +162,10 @@ export const CreateStory = () => {
     setCount(count + 1);
     CreateStories(storyData)
       .then((response) => {
-        console.log("Create story", response.data);
+        localStorage.setItem(
+          "storyData",
+          JSON.stringify([...dataSource, newData])
+        );
       })
       .catch((error) => {
         console.error("Erro na requisição:", error);
@@ -196,6 +181,7 @@ export const CreateStory = () => {
       ...row,
     });
     setDataSource(newData);
+    localStorage.setItem("storyData", JSON.stringify(newData));
   };
   const components = {
     body: {
@@ -241,9 +227,20 @@ export const CreateStory = () => {
     setDescription(event.target.value);
   };
 
-  const handleMethodologyChange = (value) => {
-    setMethodology(value);
-  };
+  useEffect(() => {
+    ListStories(room.id)
+      .then((request) => {
+        const data = request.data;
+        setDataSource(data);
+      })
+      .catch((error) => {
+        console.error("Erro na requisição:", error);
+      });
+    const storedData = localStorage.getItem("storyData");
+    if (storedData) {
+      setDataSource(JSON.parse(storedData));
+    }
+  }, [room.id]);
 
   return (
     <StoryProvider>
@@ -294,18 +291,6 @@ export const CreateStory = () => {
                 value={description}
                 onChange={handleInputDescription}
                 rows={4}
-              />
-            </Form.Item>
-            <Form.Item
-              label="Tipo de metodologia"
-              name="methodology"
-              style={{ fontWeight: 500 }}
-            >
-              {console.log("APARECE, PORRA!", methodology)}
-              <Input
-                placeholder="Tipo de metodologia"
-                value={getItemRoom.methodology}
-                onChange={(e) => handleMethodologyChange(e.target.value)}
               />
             </Form.Item>
           </Form>

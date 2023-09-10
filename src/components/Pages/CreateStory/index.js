@@ -17,7 +17,7 @@ const EditableRow = ({ index, ...props }) => {
   return (
     <Form form={form} component={false}>
       <EditableContext.Provider value={form}>
-        <tr {...props} />
+        <tr key={props.index} {...props} />
       </EditableContext.Provider>
     </Form>
   );
@@ -100,10 +100,11 @@ export const CreateStory = () => {
   const getRoom = localStorage.getItem("room");
   const getItemRoom = JSON.parse(getRoom);
 
-  const handleDelete = (key) => {
-    const newData = dataSource.filter((item) => item.key !== key);
+  const handleDelete = (id) => {
+    const newData = dataSource.filter((item) => item.id !== id);
     setDataSource(newData);
   };
+
   const defaultColumns = [
     {
       title: "Nome",
@@ -117,23 +118,21 @@ export const CreateStory = () => {
       editable: true,
     },
     {
-      render: (_, record) =>
-        dataSource.length >= 1 ? (
+      title: "Ações",
+      dataIndex: "actions",
+      className: "actions-column",
+      render: (_, record) => (
+        <>
           <Popconfirm
             title="Tem certeza que deseja excluir?"
-            onConfirm={() => handleDelete(record.key)}
+            onConfirm={() => handleDelete(record.id)}
           >
             <Tooltip placement="bottom" title={"Excluir"}>
-              <StyledIcon>
+              <StyledIcon style={{ marginRight: 50 }}>
                 <img src={Delete} alt="Excluir" />
               </StyledIcon>
             </Tooltip>
           </Popconfirm>
-        ) : null,
-    },
-    {
-      render: () => (
-        <>
           <Tooltip placement="bottom" title={"Iniciar jogo"}>
             <Link to={`/room/${room.roomCode}`}>
               <StyledIcon>
@@ -146,9 +145,26 @@ export const CreateStory = () => {
     },
   ];
 
+  const storedData = localStorage.getItem("storyData");
+
+  useEffect(() => {
+    ListStories(room.id)
+      .then((request) => {
+        const data = request.data;
+        setDataSource(data);
+      })
+      .catch((error) => {
+        console.error("Erro na requisição:", error);
+      });
+
+    if (storedData) {
+      setDataSource(JSON.parse(storedData));
+    }
+  }, [room.id, storedData]);
+
   const handleAdd = () => {
     const newData = {
-      key: count,
+      key: storedData.key,
       name: story,
       description: description,
     };
@@ -227,21 +243,6 @@ export const CreateStory = () => {
     setDescription(event.target.value);
   };
 
-  useEffect(() => {
-    ListStories(room.id)
-      .then((request) => {
-        const data = request.data;
-        setDataSource(data);
-      })
-      .catch((error) => {
-        console.error("Erro na requisição:", error);
-      });
-    const storedData = localStorage.getItem("storyData");
-    if (storedData) {
-      setDataSource(JSON.parse(storedData));
-    }
-  }, [room.id]);
-
   return (
     <StoryProvider>
       <Container>
@@ -278,6 +279,7 @@ export const CreateStory = () => {
                 name="name"
                 value={story}
                 onChange={handleInputName}
+                required
               />
             </Form.Item>
             <Form.Item

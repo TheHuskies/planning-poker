@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form, Input, InputNumber, Modal, Select } from "antd";
+import { Button, Form, Input, InputNumber, Modal, Select, Tooltip } from "antd";
 import { Container } from "./ModalRegister.styled";
 import { useState } from "react";
 import avatar from "../../../assets/icons/avatar-generic.png";
@@ -33,7 +33,7 @@ export const ModalRegister = (props) => {
   const [btnNext, setBtnNext] = useState("");
   const [name, setName] = useState("");
   const [number, setNumber] = useState({
-    value: 2, // valor minimo de participantes
+    value: 2,
   });
   const [methodology, setMethodology] = useState("");
   const { room, setRoom } = useRoom();
@@ -112,9 +112,9 @@ export const ModalRegister = (props) => {
               </div>
               <div>
                 <Form layout="vertical" form={form}>
-                  <Form.Item label="Seu nome: " required>
+                  <Form.Item label="Nome: ">
                     <Input
-                      placeholder="Seu nome"
+                      placeholder="Nome"
                       name="name"
                       value={name}
                       onChange={handleInputName}
@@ -127,16 +127,27 @@ export const ModalRegister = (props) => {
                     help={number.errorMsg}
                     required
                   >
-                    <InputNumber
-                      min={2}
-                      max={20}
-                      value={number.value}
-                      onChange={onNumberChange}
-                    />
+                    <Tooltip
+                      title={
+                        number.value === 20
+                          ? "Atingiu o número máximo de participantes!"
+                          : number.value === 2
+                          ? "Atingiu o número mínimo de participantes!"
+                          : ""
+                      }
+                      placement="right"
+                    >
+                      <InputNumber
+                        min={2}
+                        max={20}
+                        value={number.value}
+                        onChange={onNumberChange}
+                      />
+                    </Tooltip>
                   </Form.Item>
                   <Form.Item
                     name="methodology"
-                    label="Tipo de sequência / Metodologia"
+                    label="Tipo de metodologia / sequência"
                     rules={[
                       {
                         required: true,

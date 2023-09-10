@@ -15,12 +15,14 @@ export const Container = styled.div`
     font-family: "Roboto";
     font-weight: 700;
   }
+  .actions-column {
+    display: flex;
+    justify-content: center;
+  }
 `;
 
 export const StyledIcon = styled.div`
-  align-items: center;
-  display: flex;
-  justify-content: center;
+  display: inline-table;
   img {
     width: 20px;
   }

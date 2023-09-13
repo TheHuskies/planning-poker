@@ -9,6 +9,7 @@ import { useRoom } from "../../Context/RoomContext";
 import { StoryProvider, useStory } from "../../Context/StoryContext";
 import CreateStories from "../../../services/CreateStory";
 import ListStories from "../../../services/ListStories";
+import DeleteStory from "../../../services/DeleteStory";
 
 const EditableContext = React.createContext(null);
 
@@ -101,8 +102,14 @@ export const CreateStory = () => {
   const getItemRoom = JSON.parse(getRoom);
 
   const handleDelete = (id) => {
-    const newData = dataSource.filter((item) => item.id !== id);
-    setDataSource(newData);
+    try {
+      DeleteStory(id).then((newData) => {
+        newData = dataSource.filter((item) => item.id !== id);
+        setDataSource(newData);
+      });
+    } catch (error) {
+      console.error("Erro ao excluir story");
+    }
   };
 
   const defaultColumns = [
@@ -164,14 +171,15 @@ export const CreateStory = () => {
 
   const handleAdd = () => {
     const newData = {
-      key: storedData.key,
+      key: storedData ? storedData.key : null,
       name: story,
       description: description,
     };
+    const roomId = getItemRoom ? getItemRoom.id : null;
     const storyData = {
       title: story,
       description: description,
-      roomId: getItemRoom.id,
+      roomId: roomId,
     };
 
     setDataSource([...dataSource, newData]);

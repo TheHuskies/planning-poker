@@ -7,6 +7,9 @@ import Timer from "./../../../assets/icons/timer.svg";
 import { copyTextLink } from "./../../Utils/clipBoard";
 import { Cards } from "../../Cards";
 import { Chart } from "../../Chart";
+import arrow from "./../../../assets/icons/arrow.svg";
+import { Link } from "react-router-dom";
+
 const { Countdown } = Statistic;
 
 const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30;
@@ -123,7 +126,7 @@ export const Room = () => {
         </div>
         <div>
           <div style={{ height: "fit-content" }}>
-            <p className="title" style={{ width: "max-content" }}>
+            <p className="title" style={{ margin: "max-content" }}>
               Story: Modal de Cadastro de Usuário
             </p>
           </div>
@@ -133,10 +136,34 @@ export const Room = () => {
             </>
           ) : (
             <>
-              <div style={{ height: "fit-content" }}>
-                <p className="title" style={{ width: "max-content" }}>
-                  Resultado dos Votos
-                </p>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  margin: "50px 0px 50px 0px",
+                }}
+              >
+                <div>
+                  <p
+                    className="title"
+                    style={{ width: "auto", margin: "auto" }}
+                  >
+                    Resultado dos Votos
+                  </p>
+                </div>
+                <Link to={"/story"}>
+                  <div
+                    style={{ marginRight: 50, fontSize: 16, color: "#3535A1" }}
+                  >
+                    <img
+                      src={arrow}
+                      alt=""
+                      style={{ minWidth: 25, marginRight: 5 }}
+                    />
+                    Ver outras stories...
+                  </div>
+                </Link>
               </div>
 
               <Chart />

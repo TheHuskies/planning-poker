@@ -6,6 +6,7 @@ import { Home } from "./components/Pages/Home";
 import { Room } from "./components/Pages/Room";
 import { RoomProvider } from "./components/Context/RoomContext";
 import { StoryProvider } from "./components/Context/StoryContext";
+import { ResultsHistory } from "./components/Pages/ResultsHistory";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Header />
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/results-history" element={<ResultsHistory />} />
               <Route path="/story" element={<CreateStory />} />
               <Route path="/room/:id" element={<Room />} />
             </Routes>

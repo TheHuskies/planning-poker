@@ -15,7 +15,7 @@ export const Menu = () => {
               <NavLink to="story">Minhas histórias</NavLink>
             </Col>
             <Col span={8}>
-              <NavLink to="story">Histórico de Resultados</NavLink>
+              <NavLink to="results-history">Histórico de Resultados</NavLink>
             </Col>
             <Col span={12}>
               <Users />
